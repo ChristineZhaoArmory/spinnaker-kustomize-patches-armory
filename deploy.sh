@@ -87,14 +87,14 @@ function check_prerequisites() {
   case $SPIN_FLAVOR in
   "oss")
     OP_API_GROUP=spinnakerservices.spinnaker.io
-    if [[ $SPIN_OP_VERSION == "latest" ]]; then SPIN_OP_VERSION=`curl -s https://github.com/armory/spinnaker-operator/releases/latest | cut -d'"' -f2 | awk '{gsub(".*/v","")}1'`; fi
+    if [[ $SPIN_OP_VERSION == "latest" ]]; then SPIN_OP_VERSION=$(curl -s --head https://github.com/armory/spinnaker-operator/releases/latest | grep -iE "location\s*:" | grep -oE "v\d+\.\d+\.\d+" | grep -oE "\d+\.\d+\.\d+"); fi
     OP_URL=https://github.com/armory/spinnaker-operator/releases/download/v${SPIN_OP_VERSION}/manifests.tgz
     OP_IMAGE_BASE="armory/spinnaker-operator"
     API_VERSION="apiVersion: spinnaker.io/v1alpha2"
     ;;
   "armory")
     OP_API_GROUP=spinnakerservices.spinnaker.armory.io
-    if [[ $SPIN_OP_VERSION == "latest" ]]; then SPIN_OP_VERSION=`curl -s https://github.com/armory-io/spinnaker-operator/releases/latest | cut -d'"' -f2 | awk '{gsub(".*/v","")}1'`; fi
+    if [[ $SPIN_OP_VERSION == "latest" ]]; then SPIN_OP_VERSION=$(curl -s --head https://github.com/armory-io/spinnaker-operator/releases/latest | grep -iE "location\s*:" | grep -oE "v\d+\.\d+\.\d+" | grep -oE "\d+\.\d+\.\d+"); fi
     OP_URL=https://github.com/armory-io/spinnaker-operator/releases/download/v${SPIN_OP_VERSION}/manifests.tgz
     OP_IMAGE_BASE="armory/armory-operator"
     API_VERSION="apiVersion: spinnaker.armory.io/v1alpha2"
@@ -174,7 +174,7 @@ function assert_operator() {
   [[ $SPIN_OP_DEPLOY = 0 ]] && info "Not manging operator\n" && return
 
   find_current_operator_details
-  OPERATOR_NS=$(grep "^namespace:" "$ROOT_DIR"/operator/kustomization.yml | awk '{print $2}')
+  OPERATOR_NS=$(grep "namespace:" "$ROOT_DIR"/operator/deploy/operator/cluster/role_binding.yaml | awk '{print $2}')
   info "Resolved operator namespace: $OPERATOR_NS\n"
   check_operator_deployment
 

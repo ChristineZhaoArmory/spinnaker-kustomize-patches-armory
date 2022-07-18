@@ -11,6 +11,34 @@ spec:
   spinnakerConfig:
     profiles:
       clouddriver:
+        caching:
+          write-enabled: true
+        kubesvc:
+          cluster: kubernetes
+          jobs:
+            operationHistory:
+              purge:
+                weeks: 3
+          dynamicAccounts:
+            enabled: true
+            interceptor:
+              enabled: true
+            scanBatchSize: 5
+            scanFrequencySeconds: 60
+            namePatterns: ['^apple.*', '^.*depot.*']
+          cache:
+            accountCleanupFrequencySeconds: 40
+        credentials:
+          poller:
+            enabled: true
+            types:
+              kubernetes:
+                reloadFrequencyMs: 30000
+        account:
+          storage:
+            enabled: true
+            kubernetes:
+              enabled: false
         sql:
           enabled: true
           unknown-agent-cleanup-agent:
@@ -26,7 +54,7 @@ spec:
             readBatchSize: 500
             writeBatchSize: 300
           scheduler:
-            enabled: false # disabled for Google CloudSQL and Amazon Managed RDS SQL https://spinnaker.io/setup/productionize/persistence/clouddriver-sql/#agent-scheduling
+            enabled: true # disabled for Google CloudSQL and Amazon Managed RDS SQL https://spinnaker.io/setup/productionize/persistence/clouddriver-sql/#agent-scheduling
           connectionPools:
             default:
               # additional connection pool parameters are available here,
@@ -48,19 +76,19 @@ spec:
             user: clouddriver_migrate
             password: encrypted:k8s!n:spin-secrets!k:mysqlCdMigratePassword  # (Secret). Depending on db auth and how spinnaker secrets are managed
             jdbcUrl: jdbc:mysql://mysql:3306/clouddriver?useSSL=false&useUnicode=true&characterEncoding=utf8&connectionCollation=utf8mb4_unicode_ci # useUnicode and utf8 makes sure the database can store an emoji if one is ever added to the database
-        
+
         dualTaskRepository: # Maintaining Task Repository Availability While Migrating from Redis to SQL in production https://spinnaker.io/setup/productionize/persistence/clouddriver-sql/#maintaining-task-repository-availability-while-migrating-from-redis-to-sql
           enabled: false
           primaryClass: com.netflix.spinnaker.clouddriver.sql.SqlTaskRepository
           previousClass: com.netflix.spinnaker.clouddriver.data.task.jedis.RedisTaskRepository
-        
+
         redis:
-          enabled: true                   # only required if using externally managed redis AND Google CloudSQL or Amazon Managed RDS SQL
+          enabled: false                   # only required if using externally managed redis AND Google CloudSQL or Amazon Managed RDS SQL
           # connection: redis://redis:6379  # only required if using externally managed redis AND Google CloudSQL or Amazon Managed RDS SQL
           cache:
             enabled: false
           scheduler:
-            enabled: true # enabled for Google CloudSQL and Amazon Managed RDS SQL https://spinnaker.io/setup/productionize/persistence/clouddriver-sql/#agent-scheduling
+            enabled: false # enabled for Google CloudSQL and Amazon Managed RDS SQL https://spinnaker.io/setup/productionize/persistence/clouddriver-sql/#agent-scheduling
           taskRepository:
             enabled: false
 
