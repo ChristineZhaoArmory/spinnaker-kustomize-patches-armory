@@ -19,4 +19,3 @@ patchesStrategicMerge:
   - core/patches/version.yml
   - plugins/armory-agent/patch-clouddriver.yaml
   - expose/patch-lb.yml
-  - core/patches/version.yml

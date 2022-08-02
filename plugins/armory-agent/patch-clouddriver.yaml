@@ -61,17 +61,8 @@ spec:
                       - mountPath: /opt/clouddriver/lib/plugins
                         name: kubesvc-plugin-vol
                     startupProbe:
-                      exec:
-                        command:
-                          - wget
-                          - --no-check-certificate
-                          - --spider
-                          - -q
-                          - http://localhost:7002/health
-                      failureThreshold: 6
+                      failureThreshold: 10
                       periodSeconds: 30
-                      successThreshold: 1
-                      timeoutSeconds: 1
                   volumes:
                   - name: kubesvc-plugin-vol
                     emptyDir: {}
