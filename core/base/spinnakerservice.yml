@@ -51,11 +51,88 @@ spec:
   expose: {}            # Controls how spinnaker is exposed outside of the cluster.
   validation: {}        # Enabled/disables some validations done by the operator's admission webhook when deploying spinnaker.
   kustomize:            # Free form kustomize patches for changing how spinnaker deployments and services are generated.
-    deck: {}
-    gate: {}
-    orca: {}
-    rosco: {}
-    echo: {}
-    igor: {}
+    deck:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: deck
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
+    gate:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: gate
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
+    orca:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: orca
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
+    rosco:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: rosco
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
+    echo:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: echo
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
+    igor:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: igor
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
     clouddriver: {}
-    front50: {}
+    front50:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: front50
+                    startupProbe:
+                      failureThreshold: 30
+                      periodSeconds: 10
