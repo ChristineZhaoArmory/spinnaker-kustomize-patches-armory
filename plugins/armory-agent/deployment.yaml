@@ -23,7 +23,7 @@ spec:
     spec:
       serviceAccountName: spin-sa
       containers:
-      - image: armory/agent-k8s:1.0.24
+      - image: armory/agent-k8s:1.0.26
         imagePullPolicy: IfNotPresent
         name: armory-agent
         ports:
