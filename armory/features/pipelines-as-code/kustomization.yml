@@ -5,8 +5,8 @@ patchesStrategicMerge:
   - feature.yml
 
 secretGenerator:
-  - name: pac-secret
+  - name: spin-secrets
     options:
       disableNameSuffixHash: true
     literals:
-      - github-token=SampleAccessKey1!
+      - github-token=encrypted:k8s!n:spin-secrets!k:github-toke

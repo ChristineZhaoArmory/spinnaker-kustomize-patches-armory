@@ -12,26 +12,26 @@ spec:
             lambda:
               enabled: true
           accounts:
-          - name: aws
+          - name: christine-aws
             lambdaEnabled: true
-            accountId: "111222333444"
-            assumeRole: role/my-role
-      gate:
-        spinnaker:
-          extensibility:
-              deck-proxy:
-                enabled: true
-                plugins: &lambda-plugin
-                  Aws.LambdaDeploymentPlugin:
-                    enabled: true
-                    version: 1.0.1
-              repositories: &plugin-repositories
-                awsLambdaDeploymentPluginRepo:
-                  url: https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json  
-      orca:
-        spinnaker:
-          extensibility:
-            plugins:
-              <<: *lambda-plugin
-            repositories:
-              <<: *plugin-repositories
+            accountId: "810711266228"
+            assumeRole: role/aws-spin-support-managedrole
+      # gate:
+      #   spinnaker:
+      #     extensibility:
+      #         deck-proxy:
+      #           enabled: true
+      #           plugins: &lambda-plugin
+      #             Aws.LambdaDeploymentPlugin:
+      #               enabled: true
+      #               version: 1.0.1
+      #         repositories: &plugin-repositories
+      #           awsLambdaDeploymentPluginRepo:
+      #             url: https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json  
+      # orca:
+      #   spinnaker:
+      #     extensibility:
+      #       plugins:
+      #         <<: *lambda-plugin
+      #       repositories:
+      #         <<: *plugin-repositories

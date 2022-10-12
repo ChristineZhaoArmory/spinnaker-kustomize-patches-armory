@@ -38,22 +38,22 @@ spec:
             onlySpinnakerManaged: false      # When true, Spinnaker will only cache/display applications that have been created by Spinnaker; as opposed to attempting to configure applications for resources already present in Kubernetes.
 
           # Account for some remote Kubernetes cluster using a kubeconfig file stored in a Kubernetes secret
-#          - name: remote
-#            providerVersion: V2
-#            permissions: {}
-#            dockerRegistries: []
-#            cacheThreads: 1
-#            namespaces: []
-#            omitNamespaces: []
-#            kinds: []
-#            omitKinds: []
-#            customResources: []
-#            checkPermissionsOnStartup: true
-#            liveManifestCalls: false
-#            cachingPolicies: []
-#            oAuthScopes: []
-#            onlySpinnakerManaged: false
-#            kubeconfigFile: encryptedFile:k8s!n:spin-secrets!k:kubecfg-remote # (Secret).
+        #  - name: remote
+        #    providerVersion: V2
+        #    permissions: {}
+        #    dockerRegistries: []
+        #    cacheThreads: 1
+        #    namespaces: []
+        #    omitNamespaces: []
+        #    kinds: []
+        #    omitKinds: []
+        #    customResources: []
+        #    checkPermissionsOnStartup: true
+        #    liveManifestCalls: false
+        #    cachingPolicies: []
+        #    oAuthScopes: []
+        #    onlySpinnakerManaged: false
+        #    kubeconfigFile: encryptedFile:k8s!n:spin-secrets!k:kubecfg-remote # (Secret).
 
     # Needed for Kubernetes accounts of type "serviceAccount: true"
     service-settings:

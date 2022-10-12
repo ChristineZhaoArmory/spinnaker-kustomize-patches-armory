@@ -10,8 +10,7 @@
 # matrix here:
 # https://docs.armory.io/docs/release-notes/rn-armory-spinnaker/armoryspinnaker_v2-27-1/#plugin-compatibility
 #
-# Actual policies are defined in the "policies" folder and loaded into a
-# ConfigMap.
+# Actual policies are defined in the "policies" folder and loaded into a ConfigMap.
 #------------------------------------------------------------------------------
 apiVersion: spinnaker.armory.io/v1alpha2
 kind: SpinnakerService
@@ -24,9 +23,11 @@ spec:
       spinnaker:
         armory:
           policyEngine:
+            failOpen: true
             opa:
               # Replace with the actual URL to your Open Policy Agent deployment
-              baseUrl: http://opa:8181/v1/data
+              baseUrl: http://opa.opa.svc.cluster.local:8181/v1/data  # This is opa deployment in namespace opa
+              #baseUrl: http://opa:8181/v1/data
               # Optional. The number of seconds that the Policy Engine will wait for a response from the OPA server. Default is 10 seconds if omitted.
               # timeoutSeconds: <integer> 
         spinnaker:

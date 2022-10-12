@@ -10,9 +10,11 @@ spec:
     config:
       security:
         apiSecurity:
-          overrideBaseUrl: http://localhost:30084
+          #overrideBaseUrl: http://localhost:30084
+          overrideBaseUrl: https://christine-gate.tse-armory.io
         uiSecurity:
-          overrideBaseUrl: http://localhost:30000
+          #overrideBaseUrl: http://localhost:30000
+          overrideBaseUrl: https://christine-deck.tse-armory.io
   kustomize:
     deck:
       service:

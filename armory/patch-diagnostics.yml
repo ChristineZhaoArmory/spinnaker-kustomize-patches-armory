@@ -11,7 +11,7 @@ spec:
       armory:
         diagnostics:
           enabled: true
-          uuid: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx  # Enter uniquely Generated UUID. Used to identify individual spinnaker installations.
+          uuid: 8ad6beb4-2337-11ed-861d-0242ac120002  # Enter uniquely Generated UUID. Used to identify individual spinnaker installations.
           logging:
             enabled: true                             # true/false to enable
             endpoint: https://debug.armory.io/v1/logs # Spinnaker logs will be sent to this endpoint (e.g. https://debug.armory.io/v1/logs)

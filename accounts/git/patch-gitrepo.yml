@@ -13,7 +13,9 @@ spec:
           enabled: true
           accounts:
           - name: gitrepo
-            username: john.doe                # Git username.
+            username: ChristineZhaoArmory                # Git username.
+            #password: encrypted:vault!e:secret!p:spinnaker/github!k:password
+            #token: encrypted:vault!e:secret!p:dtag/infra!k:github-token
             token: encrypted:k8s!n:spin-secrets!k:github-token # (Secret). Git token.
 #            password: xyz                    # (Secret). Git password.
 #            tokenFile: token.txt             # (Secret). File containing a Git authentication token. File needs to be present on the machine running Spinnaker.

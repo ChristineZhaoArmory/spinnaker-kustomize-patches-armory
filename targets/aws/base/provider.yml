@@ -13,13 +13,36 @@ spec:
       providers:
         aws:
           enabled: true
-          primaryAccount: aws
+          primaryAccount: christine-aws
           accounts:
-          - name: aws
-            accountId: "111222333444"
-            assumeRole: role/my-role
+          - name: christine-aws
+            accountId: '810711266228'
+            assumeRole: role/aws-spin-support-managedrole
             providerVersion: V1
             regions:
+            - name: us-east-2
+            - name: us-east-1
+            - name: us-west-1
             - name: us-west-2
+            requiredGroupMembership: []
           defaultRegions:
+            - name: us-east-1
+            - name: us-east-2
+            - name: us-west-1
             - name: us-west-2
+          defaultKeyPairTemplate: '{{"{{"}}name{{"}}"}}-keypair'
+          defaults:
+            iamRole: BaseIAMRole
+          features:
+            cloudFormation:
+              enabled: true
+        ecs:
+          enabled: true
+          accounts:
+          - name: christine-ecs
+            requiredGroupMembership: []
+            providerVersion: V1
+            permissions: {}
+            awsAccount: christine-aws                   # Must be one of the configured AWS accounts
+          primaryAccount: christine-ecs            # Must be one of the configured AWS ECS accounts
+

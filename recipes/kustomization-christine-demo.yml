@@ -1,0 +1,51 @@
+#-----------------------------------------------------------------------------------------------------------------------
+# Minimum Starting Point recipe
+#
+# Self contained Spinnaker installation with no external dependencies and no additional configuration needed.
+# This is intended as a starting point for any kubernetes cluster.
+# Not for production use.
+#
+# Features:
+# - One Kubernetes account (Spinnaker's own cluster) for deployment targets
+# - Spinnaker authentication disabled
+# - Self hosted minio as a persistent storage
+# - Self hosted redis backend for caching and temporal storage of services
+#-----------------------------------------------------------------------------------------------------------------------
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: christine-demo
+
+resources:
+- infrastructure/debugging-tools.yml # (Optional). A pod with some tools for troubleshooting spinnaker (curl, kubectl, vault, etc.)
+
+components:
+  - core/base
+  - core/persistence/in-cluster
+  - targets/kubernetes/default
+  - logging
+  # - targets/aws/lambda
+#  - armory/features/pipelines-as-code # 2022-08-20 NOT WORKING. Store spinnaker pipelines as code under source control
+
+#bases:
+#  - infrastructure/prometheus-grafana  # (Optional). Used in conjunction with monitoring/patch-prometheus.yml for monitoring spinnaker
+#  - plugins/armory-agent                    # (Optional). Alternate implementation for kubernetes deployments. Requires plugins/armory-agent/patch-clouddriver.yaml and persistence/patch-sql-clouddriver.yml
+
+patchesStrategicMerge:
+  - core/patches/version.yml
+  - patch-startupprobes.yml
+  - expose/patch-lb.yml                 # Automatically expose spinnaker
+#  - expose/patch-nodeport.yml   # 2022-08-22 target to christine-demo-deck portal
+                                 # 2022-08-24 temporary close
+
+#  - armory/patch-vault-secrets.yml  # 2022-08-20 TEST FUTURE.
+  - accounts/git/patch-gitrepo.yml
+  - accounts/git/patch-github.yml
+#  - armory/patch-policy-engine-plugin.yml            # This enables policy engine. infrastructure/opa.yml must be enabled under resources.
+  - armory/patch-dinghy.yml
+  - armory/patch-diagnostics.yml
+  - logging/patch-logging.yml
+  - targets/aws/base/provider.yml
+  
+transformers:
+  - utilities/unique-service-account.yml

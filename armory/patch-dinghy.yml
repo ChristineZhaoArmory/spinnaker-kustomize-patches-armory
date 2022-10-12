@@ -1,0 +1,36 @@
+#-----------------------------------------------------------------------------------------------------------------
+# Example configuration for enabling dinghy (pipelines as code stored in source control).
+#
+# Feature documentation: https://docs.armory.io/docs/spinnaker/using-dinghy/
+#-----------------------------------------------------------------------------------------------------------------
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  spinnakerConfig:
+    config:
+      armory:
+        dinghy:
+          enabled: true
+          templateOrg: ChristineZhaoArmory
+          templateRepo: dinghyTemplates
+          #templateOrg: ChristineZhaoArmory        # SCM organization or namespace where application and template repositories are located
+          #templateRepo: dinghy-templates          # SCM repository where module templates are located
+          githubToken: encrypted:k8s!n:spin-secrets!k:github-token
+          githubEndpoint: https://api.github.com                   # (Default: https://api.github.com) Github API endpoint. Useful if you’re using Github Enterprise
+          autoLockPipelines: true
+          dinghyFilename: dinghyfile
+          notifiers:
+            slack:
+              enabled: true       # Whether or not Slack notifications are enabled for dinghy events
+              channel: christine-notification-test # Slack channel where notifications will be sent to
+
+    profiles:
+      dinghy:
+#        parserFormat: hcl   # Must be one of: hcl, yaml, json. Use an alternate format for dinghy files.
+        # Custom branch configuration (see https://docs.armory.io/docs/spinnaker/install-dinghy/#custom-branch-configuration)
+        repoConfig:
+          - branch: prod
+            provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
+            repo: myrepo # 2022-08-12 testing multiple branches to directories
