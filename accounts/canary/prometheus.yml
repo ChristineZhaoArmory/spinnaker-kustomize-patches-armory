@@ -16,7 +16,7 @@ spec:
           accounts:
           - name: prometheus
             endpoint:
-              baseUrl: http://myprometheus       # (Required). The base URL to the Prometheus server.
+              baseUrl: http://prometheus-k8s.monitoring.svc.cluster.local:9090        # (Required). The base URL to the Prometheus server.
             supportedTypes:
             - METRICS_STORE
             #username: admin                      # (Optional). Username for Prometheus Basic Auth

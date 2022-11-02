@@ -43,9 +43,10 @@ patchesStrategicMerge:
   - accounts/git/patch-github.yml
 #  - armory/patch-policy-engine-plugin.yml            # This enables policy engine. infrastructure/opa.yml must be enabled under resources.
   - armory/patch-dinghy.yml
-  - armory/patch-diagnostics.yml
-  - logging/patch-logging.yml
+#  - armory/patch-diagnostics.yml
+#  - logging/patch-logging.yml
   - targets/aws/base/provider.yml
-  
+  - armory/patch-observability.yml
+
 transformers:
   - utilities/unique-service-account.yml
