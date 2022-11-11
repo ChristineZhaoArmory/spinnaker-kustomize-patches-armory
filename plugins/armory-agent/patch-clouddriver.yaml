@@ -17,10 +17,10 @@ spec:
         sql:
           enabled: true    # kubesvc depends on clouddriver using SQL. See patch-sql-clouddriver for full configuration
         redis:
-          enabled: true    # kubesvc depends on redis for internal pub/sub communication
+          enabled: false    # kubesvc depends on redis for internal pub/sub communication
 
         kubesvc:
-          cluster: redis
+          cluster: kubernetes
 
         spinnaker:
           extensibility:
@@ -51,7 +51,7 @@ spec:
                 spec:
                   initContainers:
                   - name: kubesvc-plugin
-                    image: docker.io/armory/kubesvc-plugin:0.9.16  # See https://docs.armory.io/docs/armory-agent/armory-agent-quick/ for available versions
+                    image: docker.io/armory/kubesvc-plugin:0.11.10  # See https://docs.armory.io/docs/armory-agent/armory-agent-quick/ for available versions
                     volumeMounts:
                       - mountPath: /opt/plugin/target
                         name: kubesvc-plugin-vol
@@ -60,6 +60,9 @@ spec:
                     volumeMounts:
                       - mountPath: /opt/clouddriver/lib/plugins
                         name: kubesvc-plugin-vol
+                    startupProbe:
+                      failureThreshold: 10
+                      periodSeconds: 30
                   volumes:
                   - name: kubesvc-plugin-vol
                     emptyDir: {}
